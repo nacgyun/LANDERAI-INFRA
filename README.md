@@ -21,7 +21,6 @@ LANDERAI는 랜딩페이지를 생성하고 수정한 뒤 사용자별 주소로
 ## 2. 전체 아키텍처
 
 <img width="1353" height="1020" alt="LANDERAI 찐최종본 drawio" src="https://github.com/user-attachments/assets/7727b2ff-3197-4710-9071-772dc1ecc8b5" />
-<img width="2990" height="2158" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/a16b20db-1517-4041-8204-9c3a0a6ecb56" />
 
 
 위 그림은 생성·수정 요청을 처리하는 주요 구성요소를 보여줍니다. 실제 Terraform에서는 프론트엔드 CloudFront가 S3를 원본으로 사용하며, 브라우저는 API Gateway의 별도 HTTP API를 호출합니다. 생성된 페이지를 제공하는 사용자 호스팅용 CloudFront 배포도 별도로 구성되어 있습니다.
@@ -38,6 +37,7 @@ LANDERAI는 랜딩페이지를 생성하고 수정한 뒤 사용자별 주소로
 
 ## 3. 주요 설계 내용
 
+<img width="2990" height="2158" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/a16b20db-1517-4041-8204-9c3a0a6ecb56" />
 ### 3.1 Step Functions로 생성 단계 관리
 
 생성 작업을 하나의 Lambda에서 모두 실행하는 방식도 검토했습니다. 하지만 단계별 실행 결과를 확인하고, 실패한 작업을 어디에서 처리해야 하는지 구분하기 위해 Lambda를 분리하고 Step Functions로 연결했습니다.
