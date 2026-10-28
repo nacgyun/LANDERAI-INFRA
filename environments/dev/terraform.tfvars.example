@@ -1,0 +1,13 @@
+aws_region   = "ap-northeast-2"
+project_name = "landerai"
+environment  = "dev"
+
+clerk_secret_key_parameter_name = "/landerai/dev/CLERK_SECRET_KEY"
+
+github_actions_repository = "your-github-owner/LANDERAI-BE"
+clerk_publishable_key     = "pk_test_replace_me"
+clerk_authorized_party    = "http://localhost:5173,http://127.0.0.1:5173,https://dev.example.com"
+
+tags = {
+  Owner = "LANDERAI"
+}

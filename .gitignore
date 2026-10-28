@@ -1,0 +1,13 @@
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+terraform.tfvars
+*.tfplan
+*.zip
+__pycache__/
+*.pyc
+
+# Local benchmark/Step Functions comparison experiment
+/build/
+/environments/benchmark/
+/scripts/

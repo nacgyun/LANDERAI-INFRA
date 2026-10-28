@@ -1,0 +1,271 @@
+{
+    "widgets": [
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "view": "timeSeries",
+                "stacked": false,
+                "metrics": [
+                    [ "AWS/ApiGateway", "Count", "Stage", "$default", "ApiId", "tfi5bs108d" ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "prod API Count"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "view": "timeSeries",
+                "stacked": false,
+                "metrics": [
+                    [ "AWS/ApiGateway", "5xx", "Stage", "$default", "ApiId", "tfi5bs108d" ],
+                    [ ".", "4xx", ".", ".", ".", "." ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "prod API ERROR"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 12,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "view": "timeSeries",
+                "stacked": false,
+                "metrics": [
+                    [ "AWS/ApiGateway", "Latency", "Stage", "$default", "ApiId", "tfi5bs108d" ],
+                    [ ".", "IntegrationLatency", ".", ".", ".", "." ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "prod API Latency"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 18,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "view": "gauge",
+                "metrics": [
+                    [ "AWS/States", "ExecutionsSucceeded", "StateMachineArn", "arn:aws:states:ap-northeast-2:632941626317:stateMachine:landerai-prod-landing-page-workflow", { "id": "success", "stat": "Sum", "period": 60, "visible": false } ],
+                    [ ".", "ExecutionsFailed", ".", ".", { "id": "failed", "stat": "Sum", "period": 60, "visible": false } ],
+                    [ ".", "ExecutionsTimedOut", ".", ".", { "id": "timeout", "stat": "Sum", "period": 60, "visible": false } ],
+                    [ ".", "ExecutionsAborted", ".", ".", { "id": "aborted", "stat": "Sum", "period": 60, "visible": false } ],
+                    [ { "expression": "IF(SUM(success)+SUM(failed)+SUM(timeout)+SUM(aborted)>0,TIME_SERIES(100*(SUM(failed)+SUM(timeout)+SUM(aborted))/(SUM(success)+SUM(failed)+SUM(timeout)+SUM(aborted))),TIME_SERIES(0))", "label": "워크플로 비정상 종료율", "id": "failure_rate" } ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "Prod 워크플로 비정상 종료율",
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "max": 100
+                    }
+                }
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 9,
+            "width": 6,
+            "height": 7,
+            "properties": {
+                "view": "bar",
+                "metrics": [
+                    [ "AWS/States", "ExecutionsAborted", "StateMachineArn", "arn:aws:states:ap-northeast-2:632941626317:stateMachine:landerai-prod-landing-page-workflow", { "label": "Aborted", "stat": "Sum", "color": "#ff9900" } ],
+                    [ ".", "ExecutionsTimedOut", ".", ".", { "label": "TimedOut", "stat": "Sum", "color": "#9467bd" } ],
+                    [ ".", "ExecutionsFailed", ".", ".", { "label": "Failed", "stat": "Sum", "color": "#d62728" } ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "Prod 워크플로 비정상 종료 횟수",
+                "stat": "Sum",
+                "setPeriodToTimeRange": true
+            }
+        },
+        {
+            "type": "metric",
+            "x": 12,
+            "y": 9,
+            "width": 6,
+            "height": 7,
+            "properties": {
+                "view": "timeSeries",
+                "metrics": [
+                    [ "AWS/States", "ExecutionTime", "StateMachineArn", "arn:aws:states:ap-northeast-2:632941626317:stateMachine:landerai-prod-landing-page-workflow", { "id": "avg_ms", "stat": "Average", "visible": false } ],
+                    [ "...", { "id": "p95_ms", "stat": "p95", "visible": false } ],
+                    [ "...", { "id": "p99_ms", "stat": "p99", "visible": false } ],
+                    [ { "expression": "avg_ms/1000", "label": "평균 실행시간", "id": "avg_seconds", "color": "#2ca02c" } ],
+                    [ { "expression": "p95_ms/1000", "label": "p95 실행시간", "id": "p95_seconds", "color": "#ff9900" } ],
+                    [ { "expression": "p99_ms/1000", "label": "p99 실행시간", "id": "p99_seconds", "color": "#d62728" } ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "Prod 워크플로 실행시간",
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "Seconds",
+                        "showUnits": false
+                    }
+                }
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 9,
+            "width": 6,
+            "height": 7,
+            "properties": {
+                "view": "timeSeries",
+                "metrics": [
+                    [ "AWS/States", "ExecutionsStarted", "StateMachineArn", "arn:aws:states:ap-northeast-2:632941626317:stateMachine:landerai-prod-landing-page-workflow", { "label": "워크플로 실행 횟수", "stat": "Sum", "color": "#1f77b4" } ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "Prod 워크플로 실행 추이",
+                "period": 300,
+                "stat": "Sum",
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "실행 횟수 / 5분",
+                        "showUnits": false
+                    }
+                }
+            }
+        },
+        {
+            "type": "metric",
+            "x": 18,
+            "y": 9,
+            "width": 6,
+            "height": 7,
+            "properties": {
+                "view": "timeSeries",
+                "metrics": [
+                    [ "AWS/Lambda", "Errors", "FunctionName", "landerai-prod-api_lambda", { "label": "API", "stat": "Sum", "color": "#1f77b4" } ],
+                    [ "...", "landerai-prod-embedding_lambda", { "label": "Embedding", "stat": "Sum", "color": "#9467bd" } ],
+                    [ "...", "landerai-prod-design_plan_lambda", { "label": "Design Plan", "stat": "Sum", "color": "#ff9900" } ],
+                    [ "...", "landerai-prod-landing_page_variant_lambda", { "label": "Landing Page Variant", "stat": "Sum", "color": "#d62728" } ],
+                    [ "...", "landerai-prod-persist_result_lambda", { "label": "Persist Result", "stat": "Sum", "color": "#8c564b" } ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "Prod Lambda별 오류 추이",
+                "period": 60,
+                "stat": "Sum",
+                "stacked": false,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "오류 횟수 / 1분",
+                        "showUnits": false
+                    }
+                }
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 24,
+            "height": 3,
+            "properties": {
+                "view": "singleValue",
+                "metrics": [
+                    [ "AWS/Lambda", "Errors", "FunctionName", "landerai-prod-api_lambda", { "label": "API", "stat": "Sum", "color": "#1f77b4" } ],
+                    [ "...", "landerai-prod-embedding_lambda", { "label": "Embedding", "stat": "Sum", "color": "#9467bd" } ],
+                    [ "...", "landerai-prod-design_plan_lambda", { "label": "Design Plan", "stat": "Sum", "color": "#ff9900" } ],
+                    [ "...", "landerai-prod-landing_page_variant_lambda", { "label": "Landing Page Variant", "stat": "Sum", "color": "#d62728" } ],
+                    [ "...", "landerai-prod-persist_result_lambda", { "label": "Persist Result", "stat": "Sum", "color": "#8c564b" } ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "Prod Lambda별 오류 횟수",
+                "stat": "Sum",
+                "setPeriodToTimeRange": true,
+                "sparkline": false
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 16,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "view": "timeSeries",
+                "metrics": [
+                    [ "AWS/Lambda", "Duration", "FunctionName", "landerai-prod-embedding_lambda", { "id": "embedding_ms", "stat": "Average", "visible": false } ],
+                    [ "...", "landerai-prod-design_plan_lambda", { "id": "design_ms", "stat": "Average", "visible": false } ],
+                    [ "...", "landerai-prod-landing_page_variant_lambda", { "id": "variant_ms", "stat": "Average", "visible": false } ],
+                    [ { "expression": "embedding_ms/1000", "label": "Embedding", "id": "embedding_seconds", "color": "#9467bd" } ],
+                    [ { "expression": "design_ms/1000", "label": "Design Plan", "id": "design_seconds", "color": "#ff9900" } ],
+                    [ { "expression": "variant_ms/1000", "label": "Landing Page Variant", "id": "variant_seconds", "color": "#d62728" } ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "Prod Lambda별 평균 실행시간",
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "Seconds",
+                        "showUnits": false
+                    }
+                }
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 16,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "view": "timeSeries",
+                "metrics": [
+                    [ "AWS/Lambda", "Duration", "FunctionName", "landerai-prod-embedding_lambda", { "id": "embedding_p95_ms", "stat": "p95", "visible": false } ],
+                    [ "...", "landerai-prod-design_plan_lambda", { "id": "design_p95_ms", "stat": "p95", "visible": false } ],
+                    [ "...", "landerai-prod-landing_page_variant_lambda", { "id": "variant_p95_ms", "stat": "p95", "visible": false } ],
+                    [ { "expression": "embedding_p95_ms/1000", "label": "Embedding p95", "id": "embedding_p95_seconds", "color": "#9467bd" } ],
+                    [ { "expression": "design_p95_ms/1000", "label": "Design Plan p95", "id": "design_p95_seconds", "color": "#ff9900" } ],
+                    [ { "expression": "variant_p95_ms/1000", "label": "Landing Page Variant p95", "id": "variant_p95_seconds", "color": "#d62728" } ]
+                ],
+                "region": "ap-northeast-2",
+                "title": "Prod Lambda별 p95 실행시간",
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "Seconds",
+                        "showUnits": false
+                    }
+                }
+            }
+        },
+        {
+            "type": "log",
+            "x": 0,
+            "y": 22,
+            "width": 24,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE logGroups(namePrefix: [\"/aws/lambda/landerai-prod-\"], class: \"STANDARD\") |\nfields @timestamp, @log, @message\n| filter @message like /ERROR|Error|error|Exception|Traceback|Task timed out/\n| sort @timestamp desc\n| limit 50",
+                "region": "ap-northeast-2",
+                "stacked": false,
+                "view": "table",
+                "title": ""
+            }
+        }
+    ]
+}
